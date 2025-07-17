@@ -5,10 +5,7 @@ repeat
 until config and config.item_ID and config.item_ID >= 1
 
 for i = 1, 6 do
-local args = {
-    [1] = config.item_ID
-}
 
-game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("MarketService"):WaitForChild("RF"):WaitForChild("Buy"):InvokeServer(unpack(args))
-    wait(math.random() * 0.4 + 2.01)
+game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.MarketService.RF.Buy:InvokeServer(config.item_ID)
+    wait(math.random() * 0.4 + 1.5)
 end
