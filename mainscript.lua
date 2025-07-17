@@ -12,7 +12,9 @@ end
 ]]--
 print("[DEBUG] Script started")
 
-local config
+local timestamp = tick()
+local url = "https://raw.githubusercontent.com/ProxoProxo/ArcadeHaven/main/control.lua?ts=" .. tostring(timestamp)
+local config = loadstring(game:HttpGet(url, true))()
 repeat
     print("[DEBUG] Attempting to load control.lua...")
     local success, result = pcall(function()
