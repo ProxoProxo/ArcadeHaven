@@ -10,7 +10,7 @@ game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].kni
     wait(math.random() * 0.4 + 1.5)
 end
 ]]--
-print("[DEBUG] Script started")
+--[[print("[DEBUG] Script started")
 
 local timestamp = tick()
 local url = "https://raw.githubusercontent.com/ProxoProxo/ArcadeHaven/main/control.lua?ts=" .. tostring(timestamp)
@@ -59,3 +59,41 @@ for i = 1, 6 do
 end
 
 print("[DEBUG] Script finished")
+]]--
+local config
+
+repeat
+    local timestamp = tick()
+    local url = "https://raw.githubusercontent.com/ProxoProxo/ArcadeHaven/main/control.lua?ts=" .. tostring(timestamp)
+
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet(url, true))()
+    end)
+
+    if success and result and type(result) == "table" then
+        config = result
+        print("[DEBUG] Fetched item_ID:", config.item_ID)
+    else
+        warn("[ERROR] Failed to fetch or parse control.lua:", result)
+    end
+
+    wait(math.random() * 0.05 + 0.35)
+until config and config.item_ID and config.item_ID >= 1
+
+print("[INFO] item_ID valid, executing main loop")
+
+for i = 1, 6 do
+    local success, err = pcall(function()
+        game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"]
+            .knit.Services.MarketService.RF.Buy
+            :InvokeServer(config.item_ID)
+    end)
+
+    if success then
+        print(string.format("[INFO] Invocation %d success", i))
+    else
+        warn(string.format("[ERROR] Invocation %d failed:", i), err)
+    end
+
+    wait(math.random() * 0.4 + 1.5)
+end
