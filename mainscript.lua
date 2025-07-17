@@ -60,7 +60,7 @@ end
 
 print("[DEBUG] Script finished")
 ]]--
-local config
+--[[local config
 
 repeat
     local url = "https://2f5fd492-b880-4c79-a92b-f984cef296d9-00-u3ld71vsn8wp.riker.replit.dev:3000/control.lua"
@@ -84,6 +84,43 @@ print("[INFO] item_ID valid, executing main loop")
 for i = 1, 6 do
     local success, err = pcall(function()
         game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"]
+            .knit.Services.MarketService.RF.Buy
+            :InvokeServer(config.item_ID)
+    end)
+
+    if success then
+        print(string.format("[INFO] Invocation %d success", i))
+    else
+        warn(string.format("[ERROR] Invocation %d failed:", i), err)
+    end
+
+    wait(math.random() * 0.4 + 1.5)
+end
+]]--
+local config
+
+repeat
+    local url = "https://arcade-haven.vercel.app/control.lua"
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet(url, true))()
+    end)
+
+    if success and result and type(result) == "table" then
+        config = result
+        print("[DEBUG] Fetched item_ID:", config.item_ID)
+    else
+        warn("[ERROR] Failed to fetch or parse control.lua:", result)
+    end
+
+    wait(math.random() * 0.05 + 0.35)
+until config and config.item_ID and config.item_ID >= 1
+
+print("[INFO] item_ID valid, executing main loop")
+
+for i = 1, 6 do
+    local success, err = pcall(function()
+        game:GetService("ReplicatedStorage")
+            .Packages._Index["sleitnick_knit@1.4.7"]
             .knit.Services.MarketService.RF.Buy
             :InvokeServer(config.item_ID)
     end)
