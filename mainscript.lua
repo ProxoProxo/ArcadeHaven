@@ -63,8 +63,7 @@ print("[DEBUG] Script finished")
 local config
 
 repeat
-    local timestamp = tick()
-    local url = "https://cdn.jsdelivr.net/gh/ProxoProxo/ArcadeHaven/control.lua?t=" .. tostring(timestamp)
+    local url = "https://2f5fd492-b880-4c79-a92b-f984cef296d9-00-u3ld71vsn8wp.riker.replit.dev/control.lua"
 
     local success, result = pcall(function()
         return loadstring(game:HttpGet(url, true))()
