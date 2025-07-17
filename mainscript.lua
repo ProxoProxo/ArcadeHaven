@@ -97,6 +97,8 @@ for i = 1, 6 do
     wait(math.random() * 0.4 + 1.5)
 end
 ]]--
+
+--[[
 local config
 
 repeat
@@ -131,5 +133,31 @@ for i = 1, 6 do
         warn(string.format("[ERROR] Invocation %d failed:", i), err)
     end
 
+    wait(math.random() * 0.4 + 1.5)
+end
+]]--
+local config
+
+repeat
+    local url = "https://arcade-haven.vercel.app/control.lua"
+    config = loadstring(game:HttpGet(url, true))()
+
+    if config and config.item_ID and config.item_ID >= 1 then
+        print("[INFO] Fetched item_ID:", config.item_ID)
+    else
+        print("[WAIT] item_ID still below 1, retrying...")
+    end
+
+    wait(math.random() * 0.05 + 0.35)
+until config and config.item_ID and config.item_ID >= 1
+
+print("[INFO] item_ID valid, executing main loop")
+
+for i = 1, 6 do
+    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"]
+        .knit.Services.MarketService.RF.Buy
+        :InvokeServer(config.item_ID)
+
+    print(string.format("[INFO] Invocation %d succeeded", i))
     wait(math.random() * 0.4 + 1.5)
 end
