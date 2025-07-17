@@ -64,7 +64,7 @@ local config
 
 repeat
     local timestamp = tick()
-    local url = "https://raw.githubusercontent.com/ProxoProxo/ArcadeHaven/main/control.lua?ts=" .. tostring(timestamp)
+    local url = "https://cdn.jsdelivr.net/gh/ProxoProxo/ArcadeHaven/control.lua?t=" .. tostring(timestamp)
 
     local success, result = pcall(function()
         return loadstring(game:HttpGet(url, true))()
